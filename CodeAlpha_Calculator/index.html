@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Calculator</title>
+  <style>
+    body {
+      background-color: #d79d9d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .calculator {
+      width: 320px;
+      border: 3px solid #03dac6;
+      padding: 20px;
+      border-radius: 12px;
+      background-color: #2b2b2b;
+      box-shadow: 0 0 30px #03dac6;
+    }
+
+    .calculator input[type="text"] {
+      width: calc(100% - 10px);
+      height: 50px;
+      margin-bottom: 15px;
+      font-size: 24px;
+      text-align: right;
+      padding: 5px;
+      color: #00ff9c;
+      background-color: #000;
+      border: none;
+      border-radius: 6px;
+    }
+
+    .calculator input[type="button"] {
+      width: 80px;
+      height: 50px;
+      margin: 5px;
+      font-size: 20px;
+      border: none;
+      border-radius: 8px;
+      background-color: #444;
+      color: white;
+      transition: 0.2s ease;
+    }
+
+    .calculator input[type="button"]:hover {
+      background-color: #03dac6;
+      color: black;
+      font-weight: bold;
+    }
+
+    .operator {
+      background-color: #ff9800;
+    }
+
+    .equal {
+      background-color: #00c853;
+    }
+
+    .clear {
+      background-color: #d32f2f;
+    }
+
+    .backspace {
+      background-color: #757575;
+    }
+  </style>
+</head>
+<body>
+
+<div class="calculator">
+  <input type="text" id="display" readonly>
+  <br>
+  <input type="button" value="7" onclick="addToDisplay('7')">
+  <input type="button" value="8" onclick="addToDisplay('8')">
+  <input type="button" value="9" onclick="addToDisplay('9')">
+  <br>
+  <input type="button" value="4" onclick="addToDisplay('4')">
+  <input type="button" value="5" onclick="addToDisplay('5')">
+  <input type="button" value="6" onclick="addToDisplay('6')">
+  <br>
+  <input type="button" value="1" onclick="addToDisplay('1')">
+  <input type="button" value="2" onclick="addToDisplay('2')">
+  <input type="button" value="3" onclick="addToDisplay('3')">
+  <br>
+  <input type="button" value="0" onclick="addToDisplay('0')">
+  <input type="button" value="." onclick="addToDisplay('.')">
+  <input type="button" value="-" onclick="addToDisplay('-')" class="operator">
+  <br>
+  <input type="button" value="÷" onclick="addToDisplay('÷')" class="operator">
+  <input type="button" value="*" onclick="addToDisplay('*')" class="operator">
+  <input type="button" value="+" onclick="addToDisplay('+')" class="operator">
+  <br>
+  <input type="button" value="=" onclick="calculate()" class="equal">
+  <input type="button" value="C" onclick="clearDisplay()" class="clear">
+  <input type="button" value="⌫" onclick="backspace()" class="backspace">
+</div>
+
+<script>
+  const display = document.getElementById('display');
+
+  function addToDisplay(value) {
+    display.value += value;
+  }
+
+  function clearDisplay() {
+    display.value = '';
+  }
+
+  function backspace() {
+    display.value = display.value.slice(0, -1);
+  }
+
+  function calculate() {
+    try {
+      display.value = eval(display.value);
+    } catch {
+      display.value = 'Error';
+    }
+  }
+
+  // ✅ Keyboard support
+  document.addEventListener('keydown', (e) => {
+    const key = e.key;
+
+    if ((key >= '0' && key <= '9') || ['+', '-', '*', '÷', '.'].includes(key)) {
+      addToDisplay(key);
+    } else if (key === 'Enter') {
+      calculate();
+    } else if (key === 'Backspace') {
+      backspace();
+    } else if (key === 'Escape') {
+      clearDisplay();
+    }
+  });
+</script>
+
+</body>
+</html>
